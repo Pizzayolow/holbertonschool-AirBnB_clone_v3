@@ -17,7 +17,7 @@ def teardown(err):
     """method called when the instance is at the end"""
     storage.close()
 
-
+"""define with the ENV the port and host"""
 if __name__ == "__main__":
     host_hbnb = os.environ.get('HBNB_API_HOST', "0.0.0.0")
     port_hbnb = int(os.environ.get('HBNB_API_PORT', 5000))
