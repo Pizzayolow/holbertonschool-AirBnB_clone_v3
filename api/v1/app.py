@@ -18,11 +18,13 @@ app.register_blueprint(app_views)
 def teardown(err):
     """method called when the instance is at the end"""
     storage.close()
-    
+
+
 @app.errorhandler(404)
 def not_found(e):
     """message for 404"""
-    return jsonify(error="Not found")
+    return jsonify(error="Not found"), 404
+
 
 """define with the ENV the port and host"""
 if __name__ == "__main__":
