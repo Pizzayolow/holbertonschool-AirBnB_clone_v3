@@ -5,6 +5,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import Blueprint
 import os
+from flask import jsonify
 
 """create an instance of Flask"""
 app = Flask(__name__)
@@ -17,6 +18,11 @@ app.register_blueprint(app_views)
 def teardown(err):
     """method called when the instance is at the end"""
     storage.close()
+    
+@app.errorhandler(404)
+def not_found(e):
+    """message for 404"""
+    return jsonify(error="Not found")
 
 """define with the ENV the port and host"""
 if __name__ == "__main__":
