@@ -46,20 +46,26 @@ def delete_city(id):
         return jsonify({}), 200
 
 
-@app_views.route("/states/<id>/cities", methods=["POST"], strict_slashes=False)
-def create_city(id):
-    """add a state with the name, mandatory"""
-
+@app_views.route('states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
+def city_create(state_id):
+    """Returns the new City with the status code 201"""
     data = request.get_json()
-    obj_state = storage.get(State, id)
+
+    """Get the State object by its ID"""
+    obj_state = storage.get(State, state_id)
     if obj_state is None:
         abort(404)
+
+    if data is None:
+        return "Not a JSON\n", 400
     elif "name" not in data:
         return "Missing name\n", 400
     else:
+        """Create a new City object"""
         obj = City()
         obj.name = data["name"]
-        obj_state_id = id
+        obj.state_id = state_id
         storage.new(obj)
         storage.save()
         return jsonify(obj.to_dict()), 201
